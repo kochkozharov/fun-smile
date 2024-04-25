@@ -1,8 +1,6 @@
 module Interpreter
 open Constants
 
-
-
 type tok = string
 type expr = 
     | Var of tok
@@ -21,20 +19,35 @@ and
     env = Map<string, expr>
 
 
+let apply_operation op args =
+  match op, args with
+  | "+", [Int(a); Int(b)] -> Int(a + b)
+  | "-", [Int(a); Int(b)] -> Int(a - b)
+  | "*", [Int(a); Int(b)] -> Int(a*b)
+  | "/", [Int(a); Int(b)] -> Int(a/b)
+  | "=", [Int(a); Int(b)] -> Bool(a=b)
+  | "<", [Int(a); Int(b)] -> Bool(a<b)
+  | ">", [Int(a); Int(b)] -> Bool(a>b)
+  | "<=", [Int(a); Int(b)] -> Bool(a<=b)
+  | ">=", [Int(a); Int(b)] -> Bool(a>=b)
+  | _, _ -> failwith "Invalid arguments"
+
+let funof = function
+  | "+" 
+  | "-" 
+  | "*"
+  | "/"
+  | "="
+  | "<"
+  | ">"
+  | "<="
+  | ">="
+   as op -> apply_operation op
+  | _ -> failwith "Unknown builtin"
+
 let arity = function
     | "sin" -> 1
     | _ -> 2
-
-let funof = function
-    | "+" -> (fun [Int(a); Int(b)] -> Int(a+b))
-    | "-" -> (fun [Int(a); Int(b)] -> Int(a-b))
-    | "*" -> (fun [Int(a); Int(b)] -> Int(a*b))
-    | "/" -> (fun [Int(a); Int(b)] -> Int(a/b))
-    | "=" -> (fun [Int(a); Int(b)] -> Bool(a=b))
-    | "<" -> (fun [Int(a); Int(b)] -> Bool(a<b))
-    | ">" -> (fun [Int(a); Int(b)] -> Bool(a>b))
-    | "<=" -> (fun [Int(a); Int(b)] -> Bool(a<=b))
-    | ">=" -> (fun [Int(a); Int(b)] -> Bool(a>=b))
 
 let rec eval exp env =
     let _ = printfn "eval %A where %A" exp env 
@@ -52,8 +65,8 @@ let rec eval exp env =
         | LetRec(tok, e1, e2) ->
           eval e2 (Map.add tok (RecClosure(e1, env, tok)) env)
         | Lambda(tok, ex) -> Closure(exp, env)
+        | RecClosure(exp, env, tol) -> exp
         | Closure(exp, env) -> exp
-        | RecClosure(exp, env, tok) -> exp
         | Bool(s) -> Bool(s)
 and apply e1 e2 = 
     let _ = printfn "app (%A) (%A)" e1 e2
@@ -64,12 +77,19 @@ and apply e1 e2 =
     | Op(tok, n, args) ->
       if n=1 then (funof tok) (args@[e2])
       else Op(tok, n-1, args@[e2])
+    | _ -> failwith "Invalid application"
 
-let E exp = eval exp Map.empty
+let environ exp = eval exp Map.empty
 
-let test = E (App(App(Builtin("+"), Int(8)), Int(3)))
-
-let fact () = E (LetRec("fact", Lambda(
-    "x", Cond(App(App(Builtin("<="), Var("x")), Bool(true)), Bool(true),
-    App(App(Builtin("*"),Var("x")), App(Var("fact"),App(App(Builtin("-"), Var("x")), Bool(true)))))
+let fact = environ (LetRec("fact", Lambda(
+    "x", Cond(App(App(Builtin("<="), Var("x")), Int(1)), Int(1),
+    App(App(Builtin("*"),Var("x")), App(
+        Var("fact"),App(App(Builtin("-"), Var("x")), Int(1))
+        )))
     ), App(Var("fact"), Int(5))))
+    
+let printExpr = function
+    | Int(x) -> printfn "%d" x
+    | _ -> failwith "TODO"
+
+printExpr fact
