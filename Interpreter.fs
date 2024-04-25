@@ -1,24 +1,6 @@
 module Interpreter
 open Constants
 
-type tok = string
-type expr = 
-    | Var of tok
-    | Lambda of tok *expr
-    | App of expr*expr
-    | Int of int
-    | Bool of bool
-    | Cond of expr*expr*expr
-    | Let of tok*expr*expr
-    | LetRec of tok*expr*expr
-    | Builtin of tok
-    | Op of tok*int*expr list
-    | Closure of expr*env
-    | RecClosure of expr*env*tok
-and 
-    env = Map<string, expr>
-
-
 let apply_operation op args =
   match op, args with
   | "+", [Int(a); Int(b)] -> Int(a + b)
