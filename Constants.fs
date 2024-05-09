@@ -1,23 +1,37 @@
 module Constants
-let INPUT = ":o"
-let PRINT = ":)"
+[<Literal>] 
 let ADD = ":+"
+[<Literal>] 
 let SUB = ":-"
+[<Literal>] 
 let MUL = ":*"
+[<Literal>] 
 let DIV = ":/"
+[<Literal>] 
 let LET = "-_-"
+[<Literal>] 
 let LET_REC =  "(-_-)"
+[<Literal>] 
+let IN = "in"
+[<Literal>] 
 let ARROW = "(/>_<)/~o "
+[<Literal>] 
 let IF = "(?_?)"
+[<Literal>] 
 let THEN = "(T_T)"
+[<Literal>] 
 let ELSE = "(E_E)"
-let R_APP =  "<:"
-let L_APP =  ":>"
+[<Literal>] 
+let R_APP =  ":)"
+[<Literal>] 
+let FUN = "fun"
+let TRUE = "True"
+let FALSE = "False"
 
 type tok = string
 type expr = 
     | Var of tok
-    | Lambda of tok *expr
+    | Lambda of tok*expr
     | App of expr*expr
     | Int of int
     | Bool of bool
@@ -30,4 +44,3 @@ type expr =
     | RecClosure of expr*env*tok
 and 
     env = Map<string, expr>
-

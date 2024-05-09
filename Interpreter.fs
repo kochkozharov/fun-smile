@@ -3,10 +3,10 @@ open Constants
 
 let apply_operation op args =
   match op, args with
-  | "+", [Int(a); Int(b)] -> Int(a + b)
-  | "-", [Int(a); Int(b)] -> Int(a - b)
-  | "*", [Int(a); Int(b)] -> Int(a*b)
-  | "/", [Int(a); Int(b)] -> Int(a/b)
+  | ADD, [Int(a); Int(b)] -> Int(a + b)
+  | SUB, [Int(a); Int(b)] -> Int(a - b)
+  | MUL, [Int(a); Int(b)] -> Int(a*b)
+  | DIV, [Int(a); Int(b)] -> Int(a/b)
   | "=", [Int(a); Int(b)] -> Bool(a=b)
   | "<", [Int(a); Int(b)] -> Bool(a<b)
   | ">", [Int(a); Int(b)] -> Bool(a>b)
@@ -15,10 +15,10 @@ let apply_operation op args =
   | _, _ -> failwith "Invalid arguments"
 
 let funof = function
-  | "+" 
-  | "-" 
-  | "*"
-  | "/"
+  | ADD 
+  | SUB 
+  | MUL
+  | DIV
   | "="
   | "<"
   | ">"
@@ -61,17 +61,21 @@ and apply e1 e2 =
       else Op(tok, n-1, args@[e2])
     | _ -> failwith "Invalid application"
 
-let environ exp = eval exp Map.empty
+let exec exp = eval exp Map.empty
 
-let fact = environ (LetRec("fact", Lambda(
+let fact = exec (LetRec("fact", Lambda(
     "x", Cond(App(App(Builtin("<="), Var("x")), Int(1)), Int(1),
-    App(App(Builtin("*"),Var("x")), App(
-        Var("fact"),App(App(Builtin("-"), Var("x")), Int(1))
+    App(App(Builtin(MUL),Var("x")), App(
+        Var("fact"),App(App(Builtin(SUB), Var("x")), Int(1))
         )))
     ), App(Var("fact"), Int(5))))
+
+let testSum = exec
+
     
 let printExpr = function
     | Int(x) -> printfn "%d" x
+    | Var(x) -> printfn "%s" x
     | _ -> failwith "TODO"
 
 printExpr fact
