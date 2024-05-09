@@ -35,17 +35,20 @@ let ops = [ADD; SUB ; MUL; DIV; "<"; ">"; "=";
 let fbuiltin : Parser<_> = 
     ops |> List.map str |> choice |>> Builtin
 
+let fbool : Parser<_> = (stringReturn "true"  true) <|> 
+                        (stringReturn "false" false) |>> Bool
+
 let fcond : Parser<_> = 
     pipe3 (str IF >>. ws >>. fexpr .>> ws) (str THEN >>. ws >>. fexpr .>> ws)
             (str ELSE >>. ws >>. fexpr) (fun a b c -> Cond(a, b ,c))
 
 let flet : Parser<_> = 
-    pipe3 (str LET >>. ws >>. ftok .>> ws) (str ARROW >>. ws >>. fexpr .>> ws)
+    pipe3 (str LET >>. ws >>. ftok .>> ws) (str ASSIGN >>. ws >>. fexpr .>> ws)
         (fexpr) (fun a b c -> Let(a, b, c))
 
 let fletrec : Parser<_> = 
-    pipe3 (str LET_REC >>. ws >>. ftok .>> ws) (str ARROW >>. ws >>. fexpr .>> ws)
-        (fexpr) (fun a b c -> Let(a, b, c))
+    pipe3 (str LET_REC >>. ws >>. ftok .>> ws) (str ASSIGN >>. ws >>. fexpr .>> ws)
+        (fexpr) (fun a b c -> LetRec(a, b, c))
 
 do fexprRef.Value <- choice [
     fint

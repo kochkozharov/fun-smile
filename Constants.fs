@@ -25,8 +25,12 @@ let ELSE = "(E_E)"
 let R_APP =  ":)"
 [<Literal>] 
 let FUN = "fun"
+[<Literal>] 
 let TRUE = "True"
+[<Literal>] 
 let FALSE = "False"
+[<Literal>] 
+let ASSIGN = "0_0"
 
 type tok = string
 type expr = 
