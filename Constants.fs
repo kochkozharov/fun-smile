@@ -8,11 +8,21 @@ let MUL = ":*"
 [<Literal>] 
 let DIV = ":/"
 [<Literal>] 
+let GT = ">"
+[<Literal>] 
+let LT = "<"
+[<Literal>] 
+let GE = ">="
+[<Literal>] 
+let LE = "<="
+[<Literal>] 
+let EQ = "="
+[<Literal>] 
+let NE = "<>"
+[<Literal>] 
 let LET = "-_-"
 [<Literal>] 
-let LET_REC =  "(-_-)"
-[<Literal>] 
-let IN = "in"
+let LET_REC = "(-_-)"
 [<Literal>] 
 let ARROW = "(/>_<)/~o "
 [<Literal>] 
@@ -22,9 +32,9 @@ let THEN = "(T_T)"
 [<Literal>] 
 let ELSE = "(E_E)"
 [<Literal>] 
-let R_APP =  ":)"
+let R_APP =  ")"
 [<Literal>] 
-let FUN = "fun"
+let FUN = ":F"
 [<Literal>] 
 let TRUE = "True"
 [<Literal>] 

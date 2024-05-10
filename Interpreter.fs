@@ -7,11 +7,11 @@ let apply_operation op args =
   | SUB, [Int(a); Int(b)] -> Int(a - b)
   | MUL, [Int(a); Int(b)] -> Int(a*b)
   | DIV, [Int(a); Int(b)] -> Int(a/b)
-  | "=", [Int(a); Int(b)] -> Bool(a=b)
-  | "<", [Int(a); Int(b)] -> Bool(a<b)
-  | ">", [Int(a); Int(b)] -> Bool(a>b)
-  | "<=", [Int(a); Int(b)] -> Bool(a<=b)
-  | ">=", [Int(a); Int(b)] -> Bool(a>=b)
+  | EQ, [Int(a); Int(b)] -> Bool(a=b)
+  | LT, [Int(a); Int(b)] -> Bool(a<b)
+  | GT, [Int(a); Int(b)] -> Bool(a>b)
+  | LE, [Int(a); Int(b)] -> Bool(a<=b)
+  | GE, [Int(a); Int(b)] -> Bool(a>=b)
   | _, _ -> failwith "Invalid arguments"
 
 let funof = function
@@ -19,11 +19,11 @@ let funof = function
   | SUB 
   | MUL
   | DIV
-  | "="
-  | "<"
-  | ">"
-  | "<="
-  | ">="
+  | EQ
+  | LT
+  | GT
+  | LE 
+  | GE
    as op -> apply_operation op
   | _ -> failwith "Unknown builtin"
 

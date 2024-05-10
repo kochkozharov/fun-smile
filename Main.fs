@@ -13,7 +13,7 @@ let readTextFromFile (filePath: string) =
 
 [<EntryPoint>]
 let main argv =
-    let filePath = "test.smile"
+    let filePath = argv.[0]
     let fileContent = readTextFromFile filePath
     printExpr (exec (getResult fprogram fileContent ))
     0 

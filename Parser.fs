@@ -5,7 +5,6 @@ open Constants
 type UserState = unit
 type Parser<'t> = Parser<'t, UserState>
 
-
 let fexpr, fexprRef = createParserForwardedToRef<expr, UserState> ()
 
 let ws = spaces
@@ -29,7 +28,7 @@ let fapp : Parser<_> =
 let fint : Parser<_> = 
     pint32 |>> Int
 
-let ops = [ADD; SUB ; MUL; DIV; "<=";">=";"<"; ">"; "="]
+let ops = [ADD; SUB ; MUL; DIV; GE; LE; GT; LT; EQ]
 
 let fbuiltin : Parser<_> = 
     ops |> List.map str |> choice |>> Builtin
@@ -70,4 +69,4 @@ let testParser p str =
 let getResult p str = 
     match run p str with
     | Success(result, _, _)   -> result
-    | _ -> failwith "Cannot parse"
+    | Failure(errorMsg, _, _) -> failwith errorMsg
