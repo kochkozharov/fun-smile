@@ -20,7 +20,7 @@ let fvar : Parser<_> =
     ftok |>> Var
 
 let flambda : Parser<_> = 
-    pipe2 (str FUN >>. ws >>. ftok .>> ws) (str ARROW >>. fexpr) 
+    pipe2 (str FUN >>. ws >>. ftok .>> ws) (str ARROW >>. ws >>. fexpr) 
         (fun a b -> Lambda(a, b))
 
 let fapp : Parser<_> = 
@@ -29,14 +29,13 @@ let fapp : Parser<_> =
 let fint : Parser<_> = 
     pint32 |>> Int
 
-let ops = [ADD; SUB ; MUL; DIV; "<"; ">"; "=";
-                                                ">=";"<="]
+let ops = [ADD; SUB ; MUL; DIV; "<=";">=";"<"; ">"; "="]
 
 let fbuiltin : Parser<_> = 
     ops |> List.map str |> choice |>> Builtin
 
-let fbool : Parser<_> = (stringReturn "true"  true) <|> 
-                        (stringReturn "false" false) |>> Bool
+let fbool : Parser<_> = (stringReturn TRUE  true) <|> 
+                        (stringReturn FALSE false) |>> Bool
 
 let fcond : Parser<_> = 
     pipe3 (str IF >>. ws >>. fexpr .>> ws) (str THEN >>. ws >>. fexpr .>> ws)
