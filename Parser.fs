@@ -5,10 +5,11 @@ open Constants
 type UserState = unit
 type Parser<'t> = Parser<'t, UserState>
 
-let fexpr, fexprRef = createParserForwardedToRef<expr, UserState> ()
-
 let ws = spaces
 let str = pstring 
+
+// Перенаправляем вызовы к парсеру через ссылку
+let fexpr, fexprRef = createParserForwardedToRef<expr, UserState> ()
 
 let ftok : Parser<_> = 
     let isVarFirstChar c = isLetter c || c = '_'
@@ -54,6 +55,9 @@ let listBetweenStrings sOpen sClose pElement f =
 
 let flist   = listBetweenStrings "[" "]" fexpr List
 
+// do - однократное присваивание jvalueRef выражания choice
+// jvalue теперь указывает на парсер, который хранится в jvalueRef.
+// do fexprRef := choice
 do fexprRef.Value <- choice [
     fint
     fapp
