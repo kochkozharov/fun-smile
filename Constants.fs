@@ -61,6 +61,7 @@ type expr =
     | Closure of expr * env            // Замыкание (тело, окружение)
     | RecClosure of expr * env * tok   // Рекурсивное замыкание
     | List of expr list                // Список вида [expr, expr ...]
-    | String of tok                   // Строки вида "abc\n abc"
+    | String of tok                    // Строки вида "abc\n abc"
+    | Float of float
 and env = Map<string, expr>  
 

@@ -31,6 +31,9 @@ let fapp : Parser<_> =
 let fint : Parser<_> = 
     pint32 |>> Int
 
+let ffloat : Parser<_> = 
+    pfloat |>> float
+
 let ops = [ADD; SUB ; MUL; DIV; GE; LE; GT; LT; EQ; HEAD; TAIL]
 
 let fbuiltin : Parser<_> = 
@@ -90,6 +93,7 @@ let fstring = stringLiteral |>> String
 // do fexprRef := choice
 do fexprRef.Value <- choice [
     fint
+    ffloat
     fapp
     flambda
     fbuiltin
