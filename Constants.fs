@@ -46,21 +46,20 @@ let HEAD = "head"
 [<Literal>] 
 let TAIL = "tail"
 
-
 type tok = string
-type expr = 
+type expr =
     | Var of tok
-    | Lambda of tok*expr
-    | App of expr*expr
+    | Lambda of tok * expr             // Лямбда-выражение (имя и тело)
+    | App of expr * expr               // _(A,B)
     | Int of int
     | Bool of bool
-    | Cond of expr*expr*expr
-    | Let of tok*expr*expr
-    | LetRec of tok*expr*expr
+    | Cond of expr * expr * expr       // Условное выражение (if | then | else)
+    | Let of tok * expr * expr         // Определение (имя, значение, тело)
+    | LetRec of tok * expr * expr      // Рекурсивное определение
     | Builtin of tok
-    | Op of tok*int*expr list
-    | Closure of expr*env
-    | RecClosure of expr*env*tok
-    | List of expr list
-and 
-    env = Map<string, expr>
+    | Op of tok * int * expr list      // Операция (оператор, арность, аргументы)
+    | Closure of expr * env            // Замыкание (тело, окружение)
+    | RecClosure of expr * env * tok   // Рекурсивное замыкание
+    | List of expr list                // Список вида [expr, expr ...]
+and env = Map<string, expr>  
+
