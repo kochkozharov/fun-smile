@@ -41,6 +41,11 @@ let TRUE = "True"
 let FALSE = "False"
 [<Literal>] 
 let ASSIGN = "0_0"
+[<Literal>] 
+let HEAD = "head"
+[<Literal>] 
+let TAIL = "tail"
+
 
 type tok = string
 type expr = 
@@ -56,5 +61,6 @@ type expr =
     | Op of tok*int*expr list
     | Closure of expr*env
     | RecClosure of expr*env*tok
+    | List of expr list
 and 
     env = Map<string, expr>

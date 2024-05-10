@@ -28,7 +28,7 @@ let fapp : Parser<_> =
 let fint : Parser<_> = 
     pint32 |>> Int
 
-let ops = [ADD; SUB ; MUL; DIV; GE; LE; GT; LT; EQ]
+let ops = [ADD; SUB ; MUL; DIV; GE; LE; GT; LT; EQ; HEAD; TAIL]
 
 let fbuiltin : Parser<_> = 
     ops |> List.map str |> choice |>> Builtin
@@ -48,6 +48,12 @@ let fletrec : Parser<_> =
     pipe3 (str LET_REC >>. ws >>. ftok .>> ws) (str ASSIGN >>. ws >>. fexpr .>> ws)
         (fexpr) (fun a b c -> LetRec(a, b, c))
 
+let listBetweenStrings sOpen sClose pElement f =
+    between (str sOpen) (str sClose)
+            (ws >>. sepBy (pElement .>> ws) (str "," >>. ws) |>> f)
+
+let flist   = listBetweenStrings "[" "]" fexpr List
+
 do fexprRef.Value <- choice [
     fint
     fapp
@@ -57,6 +63,7 @@ do fexprRef.Value <- choice [
     flet
     fletrec
     fvar
+    flist
 ]
 
 let fprogram : Parser<_> = ws >>. fexpr .>> ws .>> eof

@@ -8,10 +8,13 @@ let apply_operation op args =
   | MUL, [Int(a); Int(b)] -> Int(a*b)
   | DIV, [Int(a); Int(b)] -> Int(a/b)
   | EQ, [Int(a); Int(b)] -> Bool(a=b)
+  | EQ, [List(a); List(b)] -> Bool(a=b)
   | LT, [Int(a); Int(b)] -> Bool(a<b)
   | GT, [Int(a); Int(b)] -> Bool(a>b)
   | LE, [Int(a); Int(b)] -> Bool(a<=b)
   | GE, [Int(a); Int(b)] -> Bool(a>=b)
+  | HEAD, [List(l)] -> List.head l
+  | TAIL, [List(l)] -> List(List.tail l)
   | _, _ -> failwith "Invalid arguments"
 
 let funof = function
@@ -24,11 +27,14 @@ let funof = function
   | GT
   | LE 
   | GE
+  | HEAD
+  | TAIL
    as op -> apply_operation op
   | _ -> failwith "Unknown builtin"
 
 let arity = function
-    | "sin" -> 1
+    | HEAD -> 1
+    | TAIL -> 1
     | _ -> 2
 
 let rec eval exp env =
@@ -50,6 +56,9 @@ let rec eval exp env =
         | RecClosure(exp, env, tol) -> exp
         | Closure(exp, env) -> exp
         | Bool(s) -> Bool(s)
+        | List(l) -> List(l)
+
+
 and apply e1 e2 = 
     let _ = printfn "app (%A) (%A)" e1 e2
     match e1 with
