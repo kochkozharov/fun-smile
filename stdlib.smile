@@ -1,14 +1,14 @@
 ((F_F)>> fold :@
     :F f (/>_<)/~o :F i (/>_<)/~o :F l (/>_<)/~o 
-    (?_?)  B= l []
+    (?_?) __ B= l []
     (T_T) i
-    (E_E)  f _ head l ___ fold f i _ tail l
+    (E_E) __ f _ head l ___ fold f i _ tail l
 
 (F_F)> sub1 :@ 
-    :F x (/>_<)/~o  :- x 1
+    :F x (/>_<)/~o __ :- x 1
 
 ((F_F)>> fact :@ 
     :F x (/>_<)/~o 
-        (?_?)  <B= x 1
+        (?_?) __ <B= x 1
         (T_T) 1
         (E_E) __ :* x _ fact _ sub1 x
