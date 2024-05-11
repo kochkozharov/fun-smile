@@ -1,5 +1,6 @@
 // todo стереть все явные указания типов : Parser<expr,unit>
 // todo print - операция 1 (аргумент) -> F#: printfn "%A" аргумент
+// todo протестировать аппликацию - лучше скобочки или пробелы? _(A, B) или _ A B
 
 module Parser
 open FParsec
