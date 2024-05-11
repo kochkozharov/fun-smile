@@ -258,3 +258,4 @@ paket-files/
 MyProject_coverage.xml
 
 references.fsx
+.vscode/settings.json
