@@ -1,11 +1,3 @@
+#include stdlib.smile
 
-
-(-_-) fold 0_0
-    :F f (/>_<)/~o :F i (/>_<)/~o :F l (/>_<)/~o 
-    (?_?) )) = l []
-    (T_T) i
-    (E_E) )) f ) head l ))) fold f i ) tail l
-
-
-
-))) fold :* 1 [1,2,4]
+))) fold :* 1 [ 1, ) fact 3, 3]

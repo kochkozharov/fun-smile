@@ -1,10 +1,11 @@
 open Interpreter
 open Parser
 open System.IO
+open Preprocessor
 
 let readTextFromFile (filePath: string) =
     try
-        File.ReadAllText(filePath)
+        processFile(filePath)
     with
     | :? System.IO.FileNotFoundException ->
         failwithf "File not found: %s" filePath

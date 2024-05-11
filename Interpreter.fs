@@ -2,20 +2,40 @@ module Interpreter
 open Constants
 
 let apply_operation op args =
-  match op, args with
-  | ADD, [Int(a); Int(b)] -> Int(a + b)
-  | SUB, [Int(a); Int(b)] -> Int(a - b)
-  | MUL, [Int(a); Int(b)] -> Int(a*b)
-  | DIV, [Int(a); Int(b)] -> Int(a/b)
-  | EQ, [Int(a); Int(b)] -> Bool(a=b)
-  | EQ, [List(a); List(b)] -> Bool(a=b)
-  | LT, [Int(a); Int(b)] -> Bool(a<b)
-  | GT, [Int(a); Int(b)] -> Bool(a>b)
-  | LE, [Int(a); Int(b)] -> Bool(a<=b)
-  | GE, [Int(a); Int(b)] -> Bool(a>=b)
-  | HEAD, [List(l)] -> List.head l
-  | TAIL, [List(l)] -> List(List.tail l)
-  | _, _ -> failwith "Invalid arguments"
+    let arithmetic_op f_int f_float =
+        match args with
+        | [Int(a); Int(b)] -> Int(f_int a b)
+        | [Float(a); Float(b)] -> Float(f_float a b)
+        | _ -> failwith "Invalid arguments"
+
+    let comparison_op f_int f_float =
+        match args with
+        | [Int(a); Int(b)] -> Bool(f_int a b)
+        | [Float(a); Float(b)] -> Bool(f_float a b)
+        | _ -> failwith "Invalid arguments"
+
+    let list_op f =
+        match args with
+        | [List(l)] -> f l
+        | _ -> failwith "Invalid arguments"
+    
+    match op, args with
+    | EQ, [List(a); List(b)] -> Bool(a=b)
+    | _ ->
+
+    match op with
+    | ADD -> arithmetic_op (+) (+)
+    | SUB -> arithmetic_op (-) (-)
+    | MUL -> arithmetic_op (*) (*)
+    | DIV -> arithmetic_op (/) (/)
+    | EQ -> comparison_op (=) (=)
+    | LT -> comparison_op (<) (<)
+    | GT -> comparison_op (>) (>)
+    | LE -> comparison_op (<=) (<=)
+    | GE -> comparison_op (>=) (>=)
+    | HEAD -> list_op List.head
+    | TAIL -> list_op (List.tail >> List)
+    | _ -> failwith "Invalid arguments"
 
 let funof = function
   | ADD 
@@ -56,8 +76,9 @@ let rec eval exp env =
         | RecClosure(exp, env, tol) -> exp
         | Closure(exp, env) -> exp
         | Bool(s) -> Bool(s)
-        | List(l) -> List(l)
-
+        | List(l) -> List.map (fun expr -> eval expr env) l |> List
+        | Float(n) -> Float(n)
+        | String(s) -> String(s)
 
 and apply e1 e2 = 
     let _ = printfn "app (%A) (%A)" e1 e2
@@ -72,19 +93,5 @@ and apply e1 e2 =
 
 let exec exp = eval exp Map.empty
 
-let fact = exec (LetRec("fact", Lambda(
-    "x", Cond(App(App(Builtin("<="), Var("x")), Int(1)), Int(1),
-    App(App(Builtin(MUL),Var("x")), App(
-        Var("fact"),App(App(Builtin(SUB), Var("x")), Int(1))
-        )))
-    ), App(Var("fact"), Int(5))))
 
-let testSum = exec
-
-    
-let printExpr = function
-    | Int(x) -> printfn "%d" x
-    | Var(x) -> printfn "%s" x
-    | _ -> failwith "TODO"
-
-printExpr fact
+let printExpr : expr -> unit =  printfn "%A" 

@@ -1,0 +1,14 @@
+(-_-) fold 0_0
+    :F f (/>_<)/~o :F i (/>_<)/~o :F l (/>_<)/~o 
+    (?_?) )) = l []
+    (T_T) i
+    (E_E) )) f ) head l ))) fold f i ) tail l
+
+-_- sub1 0_0 
+    :F x (/>_<)/~o ) ) :- x 1
+
+(-_-) fact 0_0 
+    :F x (/>_<)/~o 
+        (?_?) ) ) <= x 1
+        (T_T) 1
+        (E_E) ) ) :* x ) fact ) sub1 x

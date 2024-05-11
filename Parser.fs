@@ -29,10 +29,10 @@ let fapp : Parser<_> =
     pipe2 (str R_APP >>. ws >>. fexpr .>> ws) (fexpr) (fun a b -> App(a, b))
 
 let fint : Parser<_> = 
-    pint32 |>> Int
+    pint32 .>> notFollowedBy (satisfy (fun c -> c = '.')) |>> Int
 
 let ffloat : Parser<_> = 
-    pfloat |>> float
+     pfloat |>> Float
 
 let ops = [ADD; SUB ; MUL; DIV; GE; LE; GT; LT; EQ; HEAD; TAIL]
 
@@ -58,7 +58,7 @@ let listBetweenStrings sOpen sClose pElement f =
     between (str sOpen) (str sClose)
             (ws >>. sepBy (pElement .>> ws) (str "," >>. ws) |>> f)
 
-let flist   = listBetweenStrings "[" "]" fexpr List
+let flist = listBetweenStrings "[" "]" fexpr List
 
 let stringLiteral =
     let escape =  anyOf "\"\\/bfnrt"
@@ -92,17 +92,17 @@ let fstring = stringLiteral |>> String
 // jvalue теперь указывает на парсер, который хранится в jvalueRef.
 // do fexprRef := choice
 do fexprRef.Value <- choice [
-    fint
-    ffloat
     fapp
     flambda
     fbuiltin
     fcond
     flet
     fletrec
-    fvar
     flist
     fstring
+    fvar
+    attempt fint
+    ffloat
 ]
 
 let fprogram : Parser<_> = ws >>. fexpr .>> ws .>> eof
