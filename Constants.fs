@@ -1,4 +1,3 @@
-// todo исправить stdlib
 // todo исправить FunSmile.md
 
 module Constants
