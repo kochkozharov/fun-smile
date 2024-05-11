@@ -1,3 +1,6 @@
+// todo исправить stdlib
+// todo исправить FunSmile.md
+
 module Constants
 [<Literal>] 
 let ADD = ":+"
@@ -8,23 +11,23 @@ let MUL = ":*"
 [<Literal>] 
 let DIV = ":/"
 [<Literal>] 
-let GT = ">"
+let GT = "B>" // раньше было ">"
 [<Literal>] 
-let LT = "<"
+let LT = "B<" // раньше было "<"
 [<Literal>] 
-let GE = ">="
+let GE = ">=" // todo
 [<Literal>] 
-let LE = "<="
+let LE = "<=" // todo
 [<Literal>] 
-let EQ = "="
+let EQ = "B=" // раньше было "="
 [<Literal>] 
-let NE = "<>"
+// let NE = "<>" неподдерживается больше
+// [<Literal>] 
+let LET = "(F_F)>" // раньше было "-_-"
 [<Literal>] 
-let LET = "-_-"
+let LET_REC = "((F_F)>>" // раньше было "(-_-)"
 [<Literal>] 
-let LET_REC = "(-_-)"
-[<Literal>] 
-let ARROW = "(/>_<)/~o "
+let ARROW = "(/>_<)/~o " // по планам "(/>-<)/~o"
 [<Literal>] 
 let IF = "(?_?)"
 [<Literal>] 
@@ -32,7 +35,7 @@ let THEN = "(T_T)"
 [<Literal>] 
 let ELSE = "(E_E)"
 [<Literal>] 
-let R_APP =  ")"
+let R_APP =  "_" // раньше было ")" - недуобно за скобочками следить
 [<Literal>] 
 let FUN = ":F"
 [<Literal>] 
@@ -40,7 +43,7 @@ let TRUE = "True"
 [<Literal>] 
 let FALSE = "False"
 [<Literal>] 
-let ASSIGN = "0_0"
+let ASSIGN = ":@" // раньше было "0_0"
 [<Literal>] 
 let HEAD = "head"
 [<Literal>] 
