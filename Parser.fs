@@ -1,4 +1,5 @@
 // todo стереть все явные указания типов : Parser<expr,unit>
+// todo print - операция 1 (аргумент) -> F#: printfn "%A" аргумент
 
 module Parser
 open FParsec
