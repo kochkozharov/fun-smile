@@ -13,14 +13,14 @@ let apply_operation op args =
         | [Int(a); Int(b)] -> Bool(f_int a b)
         | [Float(a); Float(b)] -> Bool(f_float a b)
         | _ -> failwith "Invalid arguments"
-
-    let list_op f =
-        match args with
-        | [List(l)] -> f l
-        | _ -> failwith "Invalid arguments"
     
     match op, args with
     | EQ, [List(a); List(b)] -> Bool(a=b)
+    | HEAD, [List(a)] -> List.head a
+    | TAIL, [List(a)] -> (List.tail >> List) a
+    | CONCAT, [List(a); List(b)] -> List (a@b)
+    | CONCAT, [a ; List(b)] -> List(a::b)
+    | NEG, [Bool(a)] -> Bool(not a)
     | _ ->
 
     match op with
@@ -33,8 +33,6 @@ let apply_operation op args =
     | GT -> comparison_op (>) (>)
     | LE -> comparison_op (<=) (<=)
     | GE -> comparison_op (>=) (>=)
-    | HEAD -> list_op List.head
-    | TAIL -> list_op (List.tail >> List)
     | _ -> failwith "Invalid arguments"
 
 let funof = function
@@ -49,12 +47,15 @@ let funof = function
   | GE
   | HEAD
   | TAIL
+  | NEG
+  | CONCAT
    as op -> apply_operation op
   | _ -> failwith "Unknown builtin"
 
 let arity = function
     | HEAD -> 1
     | TAIL -> 1
+    | NEG -> 1
     | _ -> 2
 
 let rec eval exp env =

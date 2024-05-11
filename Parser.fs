@@ -36,7 +36,7 @@ let fint : Parser<_> =
 let ffloat : Parser<_> = 
      pfloat |>> Float
 
-let ops = [ADD; SUB ; MUL; DIV; GE; LE; GT; LT; EQ; HEAD; TAIL]
+let ops = [ADD; SUB ; MUL; DIV; GE; LE; GT; LT; EQ; HEAD; TAIL; CONCAT; NEG]
 
 let fbuiltin : Parser<_> = 
     ops |> List.map str |> choice |>> Builtin

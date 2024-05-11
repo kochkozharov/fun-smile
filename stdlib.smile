@@ -4,11 +4,28 @@
     (T_T) i
     (E_E) __ f _ head l ___ fold f i _ tail l
 
-(F_F)> sub1 :@ 
-    :F x (/>_<)/~o __ :- x 1
+((F_F)>> map :@
+    :F f (/>_<)/~o :F l (/>_<)/~o 
+        (?_?) __ B= l []
+        (T_T) []
+        (E_E) __ >V< 
+                _ f _ head l 
+                __ map f _ tail l
+
+((F_F)>> filter :@
+    :F p (/>_<)/~o :F l (/>_<)/~o 
+        (?_?) __ B= l []
+        (T_T) []
+        (E_E) (?_?) _ p _ head l 
+              (T_T) __ >V< 
+                    _ head l 
+                    __ filter p _ tail l
+              (E_E) __ filter p _ tail l
 
 ((F_F)>> fact :@ 
     :F x (/>_<)/~o 
+        (F_F)> sub1 :@ 
+            :F x (/>_<)/~o __ :- x 1
         (?_?) __ <B= x 1
         (T_T) 1
         (E_E) __ :* x _ fact _ sub1 x

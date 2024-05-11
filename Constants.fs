@@ -21,13 +21,11 @@ let LE = "<B=" // раньше было "<="
 [<Literal>] 
 let EQ = "B=" // раньше было "="
 [<Literal>] 
-// let NE = "<>" неподдерживается больше
-// [<Literal>] 
 let LET = "(F_F)>" // раньше было "-_-"
 [<Literal>] 
 let LET_REC = "((F_F)>>" // раньше было "(-_-)"
 [<Literal>] 
-let ARROW = "(/>_<)/~o " // по планам "(/>-<)/~o"
+let ARROW = "(/>_<)/~o" // по планам "(/>-<)/~o"
 [<Literal>] 
 let IF = "(?_?)"
 [<Literal>] 
@@ -48,6 +46,11 @@ let ASSIGN = ":@" // раньше было "0_0"
 let HEAD = "head"
 [<Literal>] 
 let TAIL = "tail"
+[<Literal>] 
+let CONCAT = ">V<"
+[<Literal>] 
+let NEG = ":|"
+
 
 type tok = string
 type expr =
