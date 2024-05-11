@@ -15,9 +15,9 @@ let GT = "B>" // раньше было ">"
 [<Literal>] 
 let LT = "B<" // раньше было "<"
 [<Literal>] 
-let GE = ">=" // todo
+let GE = ">B=" // раньше было ">="
 [<Literal>] 
-let LE = "<=" // todo
+let LE = "<B=" // раньше было "<="
 [<Literal>] 
 let EQ = "B=" // раньше было "="
 [<Literal>] 
@@ -53,7 +53,7 @@ type tok = string
 type expr =
     | Var of tok
     | Lambda of tok * expr             // Лямбда-выражение (имя и тело)
-    | App of expr * expr               // _(A,B)
+    | App of expr * expr               // _ A B
     | Int of int
     | Bool of bool
     | Cond of expr * expr * expr       // Условное выражение (if | then | else)
