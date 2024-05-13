@@ -1,4 +1,3 @@
-- Задание -> [TASK.md](https://github.com/MAILabs-Edu-2024/fp-compiler-lab-f/blob/main/TASK.md)
 - Документация -> [Github pages](sempaitakoo.github.io)
 
 ## Авторы
