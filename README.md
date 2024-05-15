@@ -1,5 +1,5 @@
 - Документация -> [Github pages](sempaitakoo.github.io)
-- Эссе -> [Эссе](essay.txt)
+- Эссе -> [Эссе](essay.md)
 
 ## Авторы
 
